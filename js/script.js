@@ -3,7 +3,7 @@
 // eslint-disable-next-line strict
 'use strict';
 
-//Timer
+//timer
 function countTimer(deadline) {
     const timerHours = document.querySelector('#timer-hours'),
         timerMinutes = document.querySelector('#timer-minutes'),
