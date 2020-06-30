@@ -80,24 +80,22 @@ const togglePopUp = () => {
         popupBtn = document.querySelectorAll('.popup-btn'),
         popupClose = document.querySelector('.popup-close');
 
-    function fadeIn(el) {
-        let opacity = 0.01;
+    function getPopupAnim(el) {        
         let timer = setInterval(() => {
-            if (opacity >= 1) {
+            // eslint-disable-next-line no-cond-assign
+            if (popup.style.display == 'block') {
                 clearInterval(timer);
+            } else {
+                popup.style.display = 'block';
             }
-            document.querySelector(el).style.display = "block";
-            document.querySelector(el).style.opacity = opacity;
-            opacity += opacity * 0.1;
-
-        }, 10);
+        }, 200);
 
     };
 
     popupBtn.forEach(elem => {
         elem.addEventListener('click', () => {
             if (screen.width > 768) {
-                fadeIn('.popup');
+                getPopupAnim('.popup');
             } else {
                 popup.style.display = 'block';
             }
