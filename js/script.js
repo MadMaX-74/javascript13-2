@@ -82,11 +82,12 @@ const togglePopUp = () => {
 
     function fadeIn(el) {
         let opacity = 0.01;
-        document.querySelector(el).style.display = "block";
+        
         let timer = setInterval(() => {
             if (opacity >= 1) {
                 clearInterval(timer);
             }
+            document.querySelector(el).style.display = "block";
             document.querySelector(el).style.opacity = opacity;
             opacity += opacity * 0.1;
 
