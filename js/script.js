@@ -80,15 +80,17 @@ const togglePopUp = () => {
         popupBtn = document.querySelectorAll('.popup-btn'),
         popupClose = document.querySelector('.popup-close');
 
-    function getPopupAnim(el) {        
+    function getPopupAnim(el) {
+        let opacity = 0.1;
         let timer = setInterval(() => {
-            // eslint-disable-next-line no-cond-assign
-            if (popup.style.display == 'block') {
+            if (opacity >= 1) {
                 clearInterval(timer);
-            } else {
-                popup.style.display = 'block';
             }
-        }, 200);
+            document.querySelector(el).style.display = "block";
+            document.querySelector(el).style.opacity = opacity;
+            opacity += opacity + 0.1;
+
+        }, 20);
 
     };
 
