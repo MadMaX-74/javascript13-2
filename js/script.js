@@ -82,7 +82,6 @@ const togglePopUp = () => {
 
     function fadeIn(el) {
         let opacity = 0.01;
-        
         let timer = setInterval(() => {
             if (opacity >= 1) {
                 clearInterval(timer);
