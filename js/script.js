@@ -69,8 +69,11 @@ const toggleMenu = ()  => {
     };
     body.addEventListener('click', event => {
         const target = event.target;
-        if (target.closest('menu') || target.closest('.menu') || target.closest('body')) {
+        console.log(target);
+        if (target.closest('menu') || target.closest('.menu')) {
             handlerMenu();
+        } else {
+            menu.classList.remove('active-menu');
         }
     });
 };
