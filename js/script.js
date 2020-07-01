@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 /* eslint-disable no-constant-condition */
 /* eslint-disable prefer-const */
 /* eslint-disable eqeqeq */
@@ -78,28 +79,28 @@ toggleMenu();
 const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
         popupBtn = document.querySelectorAll('.popup-btn'),
-        popupClose = document.querySelector('.popup-close');
-
-    function getPopupAnim(el) {
-        let opacity = 0.1;
-        let timer = setInterval(() => {
-            if (opacity >= 1) {
-                clearInterval(timer);
-            }
-            document.querySelector(el).style.display = "block";
-            document.querySelector(el).style.opacity = opacity;
-            opacity += opacity + 0.1;
-
-        }, 20);
-
-    };
+        popupClose = document.querySelector('.popup-close'),
+        popupContent = document.querySelector('.popup-content'),
+        height = document.documentElement.clientHeight;
 
     popupBtn.forEach(elem => {
         elem.addEventListener('click', () => {
+            popup.style.display = 'block';
             if (screen.width > 768) {
-                getPopupAnim('.popup');
+                let count = 0;
+                function getPopupAnim() {
+                    count++;
+                    popupContent.style.top = 10 * count + 'px';
+                    if (15 * count < height / 5) {
+                        requestAnimationFrame(getPopupAnim);
+                    } else {
+                        // eslint-disable-next-line no-use-before-define
+                        cancelAnimationFrame(requestId);
+                    }
+                }
+                let requestId = requestAnimationFrame(getPopupAnim);
             } else {
-                popup.style.display = 'block';
+                return;
             }
         });
     });
@@ -109,3 +110,31 @@ const togglePopUp = () => {
     });
 };
 togglePopUp();
+
+popupBtn.forEach(elem => {
+
+    elem.addEventListener('click', () => {
+        popup.style.display = 'block';
+        console.log(screen.width);
+
+        if (screen.width < 768) {
+            return;
+        } else {
+            let start = 0;
+
+            function step() {
+
+                start++;
+                popupCont.style.top = 15 * start + 'px';
+
+                if (15 * start < height / 5) {
+                    requestAnimationFrame(step);
+                } else {
+                    cancelAnimationFrame(requestId);
+                }
+            }
+
+            let requestId = requestAnimationFrame(step);
+        }
+    });
+});
