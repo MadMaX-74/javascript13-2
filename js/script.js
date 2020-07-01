@@ -80,18 +80,17 @@ const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
         popupBtn = document.querySelectorAll('.popup-btn'),
         popupClose = document.querySelector('.popup-close'),
-        popupContent = document.querySelector('.popup-content'),
-        height = document.documentElement.clientHeight;
+        popupContent = document.querySelector('.popup-content');
 
     popupBtn.forEach(elem => {
         elem.addEventListener('click', () => {
             popup.style.display = 'block';
             if (screen.width > 768) {
-                let count = 0;
+                let  opacity = 0;
                 function getPopupAnim() {
-                    count++;
-                    popupContent.style.top = 10 * count + 'px';
-                    if (15 * count < height / 5) {
+                    popupContent.style.opacity = opacity;
+                    opacity += 0.1;
+                    if (opacity < 1) {
                         requestAnimationFrame(getPopupAnim);
                     } else {
                         // eslint-disable-next-line no-use-before-define
