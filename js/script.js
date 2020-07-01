@@ -109,31 +109,3 @@ const togglePopUp = () => {
     });
 };
 togglePopUp();
-
-popupBtn.forEach(elem => {
-
-    elem.addEventListener('click', () => {
-        popup.style.display = 'block';
-        console.log(screen.width);
-
-        if (screen.width < 768) {
-            return;
-        } else {
-            let start = 0;
-
-            function step() {
-
-                start++;
-                popupCont.style.top = 15 * start + 'px';
-
-                if (15 * start < height / 5) {
-                    requestAnimationFrame(step);
-                } else {
-                    cancelAnimationFrame(requestId);
-                }
-            }
-
-            let requestId = requestAnimationFrame(step);
-        }
-    });
-});
