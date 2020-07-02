@@ -69,9 +69,10 @@ const toggleMenu = ()  => {
     };
     body.addEventListener('click', event => {
         const target = event.target;
-        console.log(target);
-        if (target.closest('menu') || target.closest('.menu')) {
+        if (target.matches('.close-btn') || target.closest('.menu')) {
             handlerMenu();
+        } else if (target.matches('menu')) {
+            menu.classList.add('active-menu');
         } else {
             menu.classList.remove('active-menu');
         }
