@@ -253,3 +253,50 @@ const slider = () => {
 };
 
 slider();
+
+
+//photo
+
+const changePhoto = () => {
+    const commandPhoto = document.querySelectorAll('.command__photo');
+    commandPhoto.forEach(elem => {
+        elem.addEventListener('mouseover', event => {
+            event.target.src = event.target.dataset.img;
+        });
+    });
+
+    const secondCommand = document.querySelectorAll('.command__photo');
+
+    // Туст сделаем масив с прежникми картинками
+    const arrSrc = [];
+    secondCommand.forEach(item => {
+        arrSrc.push(item.src);
+    });
+
+    // Нужен массив, что бы методы работали
+    const photoArray = Array.from(secondCommand);
+
+    //возвращаем картинки
+    commandPhoto.forEach(elem => {
+        elem.addEventListener('mouseout', event => {
+            const index = photoArray.indexOf(event.target);
+            event.target.src = arrSrc[index];
+        });
+    });
+
+};
+
+changePhoto();
+
+
+//Ограничение ввода в калькулятор
+const checkInputCalc = () => {
+    const calcItemBlock = document.querySelector('.calc-block');
+
+    calcItemBlock.addEventListener('input', e => {
+        if (e.target.matches('input')) {
+            e.target.value = e.target.value.replace(/\D/g, '');//Не вводит все нечисла
+        }
+    });
+};
+checkInputCalc();
