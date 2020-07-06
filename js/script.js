@@ -264,17 +264,17 @@ const changePhoto = () => {
             event.target.src = event.target.dataset.img;
         });
     });
-
-    const secondCommand = document.querySelectorAll('.command__photo');
+    console.log(commandPhoto);
 
     // Туст сделаем масив с прежникми картинками
     const arrSrc = [];
-    secondCommand.forEach(item => {
+    commandPhoto.forEach(item => {
         arrSrc.push(item.src);
     });
+    console.log(arrSrc);
 
     // Нужен массив, что бы методы работали
-    const photoArray = Array.from(secondCommand);
+    const photoArray = Array.from(commandPhoto);
 
     //возвращаем картинки
     commandPhoto.forEach(elem => {
