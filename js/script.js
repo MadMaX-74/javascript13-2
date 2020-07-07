@@ -264,14 +264,12 @@ const changePhoto = () => {
             event.target.src = event.target.dataset.img;
         });
     });
-    console.log(commandPhoto);
 
     // Туст сделаем масив с прежникми картинками
     const arrSrc = [];
     commandPhoto.forEach(item => {
         arrSrc.push(item.src);
     });
-    console.log(arrSrc);
 
     // Нужен массив, что бы методы работали
     const photoArray = Array.from(commandPhoto);
