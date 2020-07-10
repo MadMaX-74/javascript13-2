@@ -83,10 +83,10 @@ const toggleMenu = ()  => {
         menu.addEventListener('click', event => {
             const target = event.target;
 
-            if (target.closest('menu ul>li>a')) {//выбираем ссылки
+            if (target.closest('menu ul>li>a')) { //выбираем ссылки
                 event.preventDefault();//отменим стандартное поведение
                 const link = target.closest('menu ul>li>a').getAttribute('href');//получаем атрибут ссылку
-                document.querySelector(link).scrollIntoView({//на полученной ссылке применяем метод scroll
+                document.querySelector(link).scrollIntoView({ //на полученной ссылке применяем метод scroll
                     block: 'start',
                     behavior: 'smooth'
                 });
@@ -376,3 +376,103 @@ const calc = (price = 100) => {
     });
 };
 calc(100);
+
+//send ajax-form
+
+const sendForm = () => {
+    const errorMessage = 'что-то пошло не так',
+        loadMessage = 'Загрузка...',
+        seuccessMessage = 'Спасибо! Мы скоро свяжемся с вами';
+
+    const statusMessage = document.createElement('div');
+    statusMessage.style.cssText = 'font-size: 2rem';
+    statusMessage.style.cssText = 'color: #fff';
+
+    let phoneForm = document.querySelectorAll('.form-phone');
+    phoneForm.forEach(elem => {
+        elem.addEventListener('input', e => {
+            if (e.target.matches('input')) {
+                e.target.value = e.target.value.replace(/[^0-9+]/, '');
+            }
+        });
+    });
+    let message = document.querySelectorAll('.mess');
+    message.forEach(elem => {
+        elem.addEventListener('input', e => {
+            if (e.target.matches('input')) {
+                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+            }
+        });
+    });
+    let nameForm = document.querySelectorAll('.form-name');
+    nameForm.forEach(elem => {
+        elem.addEventListener('input', e => {
+            if (e.target.matches('input')) {
+                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+            }
+        });
+    });
+    let secondNameForm = document.querySelectorAll('#form2-name');
+    secondNameForm.forEach(elem => {
+        elem.addEventListener('input', e => {
+            if (e.target.matches('input')) {
+                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+            }
+        });
+    });
+
+    let form = document.querySelectorAll('form');
+    form.forEach(elem => {
+        elem.addEventListener('submit', event => {
+            event.preventDefault();
+            elem.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+
+            const formData = new FormData(elem);
+            let formInput = elem.querySelectorAll('input');
+            let phoneForm = elem.querySelectorAll('.form-phone');
+            console.log(phoneForm);
+
+
+            let body = {};
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            postData(body,
+                () => {
+                    statusMessage.textContent = seuccessMessage;
+                    formInput.forEach(elem => { elem.value = ''; });
+                },
+                error => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                    formInput.forEach(elem => { elem.value = ''; });
+                });
+
+
+        });
+    });
+
+    const postData = (body, outputData, errorData) => {
+        //AJAX
+        const request = new XMLHttpRequest();
+
+        request.addEventListener('readystatechange', () => {
+            if (request.readyState !== 4) {
+                return;
+            }
+            if (request.status === 200) {
+                outputData();
+            } else {
+                errorData(request.status);
+            }
+        });
+
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.send(JSON.stringify(body));
+    };
+};
+sendForm();
