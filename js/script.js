@@ -429,50 +429,54 @@ const sendForm = () => {
             statusMessage.textContent = loadMessage;
 
             const formData = new FormData(elem);
-            let formInput = elem.querySelectorAll('input');
-            let phoneForm = elem.querySelectorAll('.form-phone');
-            console.log(phoneForm);
-
 
             let body = {};
 
             formData.forEach((val, key) => {
                 body[key] = val;
             });
-            postData(body,
-                () => {
-                    statusMessage.textContent = seuccessMessage;
-                    formInput.forEach(elem => { elem.value = ''; });
-                },
-                error => {
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                    formInput.forEach(elem => { elem.value = ''; });
-                });
-
-
+            let outputData = () => {
+                statusMessage.textContent = seuccessMessage;
+                let formInput = document.querySelectorAll('input');
+                formInput.forEach(elem => { elem.value = ''; });
+                return;
+            };
+            let errorData = error => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+                let formInput = document.querySelectorAll('input');
+                formInput.forEach(elem => { elem.value = ''; });
+                return;
+            };
+            // eslint-disable-next-line no-use-before-define
+            postData(body)
+                .then(outputData)
+                .catch(errorData);
         });
     });
-
-    const postData = (body, outputData, errorData) => {
+    const postData = body =>
         //AJAX
-        const request = new XMLHttpRequest();
+        new Promise((resolve, reject) => {
+            const request = new XMLHttpRequest();
 
-        request.addEventListener('readystatechange', () => {
-            if (request.readyState !== 4) {
-                return;
-            }
-            if (request.status === 200) {
-                outputData();
-            } else {
-                errorData(request.status);
-            }
-        });
+            request.addEventListener('readystatechange', () => {
+                if (request.readyState !== 4) {
+                    return;
+                }
+                if (request.status === 200) {
+                    const response = JSON.stringify(body);
+                    resolve(response);
+                } else {
+                    reject(request.status);
+                }
+            });
 
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
 
-        request.send(JSON.stringify(body));
-    };
+            request.send();
+        })
+    ;
+
 };
 sendForm();
