@@ -430,32 +430,34 @@ const sendForm = () => {
 
             const formData = new FormData(elem);
 
-            let body = {};
-
-            formData.forEach((val, key) => {
-                body[key] = val;
-            });
             let outputData = () => {
                 statusMessage.textContent = seuccessMessage;
                 let formInput = document.querySelectorAll('input');
                 formInput.forEach(elem => { elem.value = ''; });
-                return;
             };
             let errorData = error => {
                 statusMessage.textContent = errorMessage;
                 console.error(error);
                 let formInput = document.querySelectorAll('input');
                 formInput.forEach(elem => { elem.value = ''; });
-                return;
             };
             // eslint-disable-next-line no-use-before-define
-            postData(body)
+            postData(formData)
                 .then(outputData)
                 .catch(errorData);
         });
     });
-    const postData = body => {
-        //AJAX
+    const postData = formData => {
+        return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: formData
+        });
+
+
+        /* //AJAX
         return new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
 
@@ -474,7 +476,7 @@ const sendForm = () => {
             request.setRequestHeader('Content-Type', 'application/json');
 
             request.send(JSON.stringify(body));
-        });
+        }); */
     };
 
 };
