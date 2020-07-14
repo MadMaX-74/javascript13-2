@@ -443,21 +443,26 @@ const sendForm = () => {
             };
             // eslint-disable-next-line no-use-before-define
             postData(formData)
-                .then(outputData)
+                .then(response => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    outputData();
+                })
                 .catch(errorData);
         });
     });
-    const postData = formData => {
-        return fetch('./server.php', {
+    const postData = formData =>
+        fetch('./server.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: formData
-        });
+        })
 
 
-        /* //AJAX
+    /* //AJAX
         return new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
 
@@ -477,7 +482,7 @@ const sendForm = () => {
 
             request.send(JSON.stringify(body));
         }); */
-    };
+    ;
 
 };
 sendForm();
