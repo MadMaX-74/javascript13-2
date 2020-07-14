@@ -381,7 +381,7 @@ calc(100);
 
 const sendForm = () => {
     const errorMessage = 'что-то пошло не так',
-        loadMessage = 'Загрузка...',
+        loadMessage = '<img src="./images/745.svg">',
         seuccessMessage = 'Спасибо! Мы скоро свяжемся с вами';
 
     const statusMessage = document.createElement('div');
