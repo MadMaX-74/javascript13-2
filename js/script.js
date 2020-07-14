@@ -426,7 +426,7 @@ const sendForm = () => {
         elem.addEventListener('submit', event => {
             event.preventDefault();
             elem.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+            statusMessage.innerHTML = loadMessage;
 
             const formData = new FormData(elem);
             let formInput = elem.querySelectorAll('input');
