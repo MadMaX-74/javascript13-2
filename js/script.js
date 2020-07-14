@@ -454,9 +454,9 @@ const sendForm = () => {
                 .catch(errorData);
         });
     });
-    const postData = body =>
+    const postData = body => {
         //AJAX
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const request = new XMLHttpRequest();
 
             request.addEventListener('readystatechange', () => {
@@ -464,8 +464,7 @@ const sendForm = () => {
                     return;
                 }
                 if (request.status === 200) {
-                    const response = JSON.stringify(body);
-                    resolve(response);
+                    resolve();
                 } else {
                     reject(request.status);
                 }
@@ -474,9 +473,9 @@ const sendForm = () => {
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
 
-            request.send();
-        })
-    ;
+            request.send(JSON.stringify(body));
+        });
+    };
 
 };
 sendForm();
