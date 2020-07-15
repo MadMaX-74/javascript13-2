@@ -7,7 +7,7 @@ const sendForm = () => {
     statusMessage.style.cssText = 'font-size: 2rem';
     statusMessage.style.cssText = 'color: #fff';
 
-    let phoneForm = document.querySelectorAll('.form-phone');
+    const phoneForm = document.querySelectorAll('.form-phone');
     phoneForm.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
@@ -15,7 +15,7 @@ const sendForm = () => {
             }
         });
     });
-    let message = document.querySelectorAll('.mess');
+    const message = document.querySelectorAll('.mess');
     message.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
@@ -23,15 +23,15 @@ const sendForm = () => {
             }
         });
     });
-    let nameForm = document.querySelectorAll('.form-name');
+    const nameForm = document.querySelectorAll('.form-name');
     nameForm.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
             }
         });
     });
-    let secondNameForm = document.querySelectorAll('#form2-name');
+    const secondNameForm = document.querySelectorAll('#form2-name');
     secondNameForm.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
@@ -49,15 +49,15 @@ const sendForm = () => {
 
             const formData = new FormData(elem);
 
-            let outputData = () => {
+            const outputData = () => {
                 statusMessage.textContent = seuccessMessage;
-                let formInput = document.querySelectorAll('input');
+                const formInput = document.querySelectorAll('input');
                 formInput.forEach(elem => { elem.value = ''; });
             };
-            let errorData = error => {
+            const errorData = error => {
                 statusMessage.textContent = errorMessage;
                 console.error(error);
-                let formInput = document.querySelectorAll('input');
+                const formInput = document.querySelectorAll('input');
                 formInput.forEach(elem => { elem.value = ''; });
             };
             // eslint-disable-next-line no-use-before-define
