@@ -19,7 +19,7 @@ const sendForm = () => {
     message.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
             }
         });
     });
@@ -35,7 +35,7 @@ const sendForm = () => {
     secondNameForm.forEach(elem => {
         elem.addEventListener('input', e => {
             if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-я\s]/iu, '');
+                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
             }
         });
     });
