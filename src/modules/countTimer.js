@@ -20,7 +20,7 @@ function countTimer(deadline) {
             seconds
         };
     }
-
+    let i = 0;
     function updateClock() {
         const timer = getTimeRemaining();
 
@@ -37,18 +37,14 @@ function countTimer(deadline) {
             timerSeconds.textContent = '0' + timer.seconds;
         }
 
-        if (timer.timeRemaining > 0) {
-            setInterval(updateClock, 1000);
-        } else if (timer.timeRemaining == 0) {
-            clearInterval(updateClock);
-        } else {
-            clearInterval(updateClock);
+        if (timer.timeRemaining == 0) {
+            clearInterval(setUpClock);
             timerHours.textContent = '00';
             timerMinutes.textContent = '00';
             timerSeconds.textContent = '00';
         }
     }
-    updateClock();
+    let setUpClock = setInterval(updateClock);
 };
 
 export default countTimer;
