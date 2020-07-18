@@ -7,75 +7,70 @@ const sendForm = () => {
     statusMessage.style.cssText = 'font-size: 2rem';
     statusMessage.style.cssText = 'color: #fff';
 
-    const phoneForm = document.querySelectorAll('.form-phone');
-    phoneForm.forEach(elem => {
-        elem.addEventListener('input', e => {
-            if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^0-9+]/, '');
-            }
-        });
+
+    document.addEventListener('input', event => {
+        const target = event.target,
+            inputText = target.closest('input[name="user_name"], input[name="user_message"]'),
+            inputPhone = target.closest('input[name="user_phone"]');
+
+        if (inputText) {
+            inputText.value = inputText.value.replace(/[^а-яё\s]/gi, '');
+        }
+
+        if (inputPhone) {
+            inputPhone.value = inputPhone.value.replace(/^[^+\d]*(\+|\d)|\D/g, '$1');
+        }
     });
-    const message = document.querySelectorAll('.mess');
-    message.forEach(elem => {
-        elem.addEventListener('input', e => {
-            if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
-            }
-        });
-    });
-    const nameForm = document.querySelectorAll('.form-name');
-    nameForm.forEach(elem => {
-        elem.addEventListener('input', e => {
-            if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
-            }
-        });
-    });
-    const secondNameForm = document.querySelectorAll('#form2-name');
-    secondNameForm.forEach(elem => {
-        elem.addEventListener('input', e => {
-            if (e.target.matches('input')) {
-                e.target.value = e.target.value.replace(/[^а-яё\s]/gi, '');
-            }
-        });
-    });
+
+
 
     const form = document.querySelectorAll('form');
     form.forEach(elem => {
         elem.addEventListener('submit', event => {
             event.preventDefault();
-            elem.appendChild(statusMessage);
-            statusMessage.innerHTML = loadMessage;
 
-            const formData = new FormData(elem);
+            const phone = elem.querySelector('.form-phone');
+            if (phone.value.length < 5) {
+                alert('Номер телефона введен не правильно');
+            } else if (phone.value.length > 12) {
+                alert('Номер телефона введен не правильно');
+            } else {
+                elem.appendChild(statusMessage);
+                statusMessage.innerHTML = loadMessage;
 
-            const outputData = () => {
-                statusMessage.textContent = seuccessMessage;
-                const formInput = document.querySelectorAll('input');
-                formInput.forEach(elem => { elem.value = ''; });
-            };
-            const errorData = error => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-                const formInput = document.querySelectorAll('input');
-                formInput.forEach(elem => { elem.value = ''; });
-            };
-            // eslint-disable-next-line no-use-before-define
-            postData(formData)
-                .then(response => {
-                    if (response.status !== 200) {
-                        throw new Error('status network not 200');
-                    }
-                    outputData();
-                })
-                .catch(errorData);
+                const formData = new FormData(elem);
+
+                const outputData = () => {
+                    statusMessage.textContent = seuccessMessage;
+                    const formInput = document.querySelectorAll('input');
+                    formInput.forEach(elem => { elem.value = ''; });
+                };
+                const errorData = error => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                    const formInput = document.querySelectorAll('input');
+                    formInput.forEach(elem => { elem.value = ''; });
+                };
+                // eslint-disable-next-line no-use-before-define
+                postData(formData)
+                    .then(response => {
+                        if (response.status !== 200) {
+                            throw new Error('status network not 200');
+                        }
+                        outputData();
+                    })
+                    .catch(errorData);
+            }
+
+
         });
     });
     const postData = formData =>
         fetch('./server.php', {
             method: 'POST',
+            origin: 'http://localhost:80',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'form/multipart'
             },
             body: formData
         })

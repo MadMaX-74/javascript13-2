@@ -12,6 +12,8 @@ const toggleMenu = ()  => {
             handlerMenu();
         } else if (target.matches('menu')) {
             menu.classList.add('active-menu');
+        } else if (target.matches('menu ul li')) {
+            menu.classList.add('active-menu');
         } else {
             menu.classList.remove('active-menu');
         }
