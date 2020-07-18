@@ -28,7 +28,7 @@ const calc = (price = 100) => {
             total = price * typeValue * squereValue * countValue * dayValue;
         }
 
-        totalValue.textContent = total;
+        totalValue.textContent = Math.floor(total);
     };
 
     calcBlock.addEventListener('change', event => {
