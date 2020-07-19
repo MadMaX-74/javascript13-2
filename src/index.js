@@ -20,6 +20,7 @@ import checkInputCalc from './modules/checkInputCalc';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
+
 //timer
 countTimer('20 July 2020');
 
@@ -49,3 +50,5 @@ calc(100);
 
 //send ajax-form
 sendForm();
+
+
